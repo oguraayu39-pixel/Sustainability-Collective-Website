@@ -1,1 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sustainability Collective</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+    <h1>Minerva Sustainability Collective</h1>
+
+    <div id="admin-section" style="display:none; border: 2px solid #444; padding: 15px; margin-top: 20px;">
+        <h3>Admin Data Sync</h3>
+        <p>Upload your reciepts for reembursment.</p>
+        <textarea id="sheetLinks" rows="5" style="width: 100%; font-size: 12px;" placeholder="https://docs.google.com/.../pub?output=csv"></textarea>
+        <br><br>
+        <button onclick="upload()" style="background-color: #28a745; color: white; padding: 10px;">Sync All Words</button>
+    </div>
+
+    <hr>
+
+    <div id="quiz-section">
+        <h3>Quiz Time!</h3>
+        <div>
+            <span>Current Score: <b id="scoreDisplay">0</b></span> | 
+            <span>Best Score: <b id="bestScoreDisplay">0</b></span>
+        </div>
+        <div id="filter-section">
+            <label>Quiz Range:</label>
+            <input type="text" id="startLetter" placeholder="a" maxlength="1" style="width: 30px;">
+            <span> to </span>
+            <input type="text" id="endLetter" placeholder="z" maxlength="1" style="width: 30px;">
+            <br>
+            <label>Timer (seconds): </label>
+            <input type="number" id="timerSetting" value="10" min="3" max="15" style="width: 50px;">
+            <br>
+            <label for="voiceSelect">Audio Accent: </label>
+            <select id="voiceSelect">
+                <option value="">Default System Voice</option>
+            </select>
+            <br>
+            <input type="checkbox" id="practiceOnlyCheckbox"> 
+            <label for="practiceOnlyCheckbox">Quiz only from "Practice More" list</label>
+        </div>
+        <button onclick="startQuiz()">Start</button>
+        <!-- <p id="timer">Time left: 15s</p> -->
+        <div id="quiz-controls" style="display:none;">
+            <div class="main-quiz-card">
+                <h2 id="timerDisplay">10s</h2> 
+                
+                <div class="input-container">
+                    <input type="text" id="answerInput" placeholder="Type here..." autocomplete="off">
+                </div>
+                
+                <div id="feedback"></div>
+
+                <div class="button-group">
+                    <button id="submitButton" onclick="checkAnswer()">Submit (Enter)</button>
+                    <button id="nextButton" onclick="startQuiz()" style="display:none;">Next Word (Enter)</button>
+                    <button id="listenButton" onclick="listenAgain()">🔊 Listen Again (Tab)</button>
+                    <button id="practiceMoreButton" onclick="markForPractice()">⭐ Practice This More</button>
+                </div>
+            </div>
+
+            <div class="shortcut-legend">
+                <span><strong>↲ Enter</strong> Submit / Next</span>
+                <span><strong>⇥ Tab</strong> Replay Audio</span>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <button onclick="toggleStats()">📊 Show Word Statistics</button>
+
+    <div id="stats-wrapper" style="display: none; margin-top: 20px;">
+        <h3>📊 Word Statistics</h3>
+        <button onclick="updateStatsTable()">Refresh Stats</button>
+        <div class="sort-controls" style="margin-bottom: 10px;">
+            <label>Sort by: </label>
+            <select id="sortSelect" onchange="updateStatsTable()">
+                <option value="alpha">A-Z</option>
+                <option value="best">Best Mastered</option>
+                <option value="worst">Least Mastered</option>
+            </select>
+        </div>
+        <table id="statsTable" border="1" style="width:100%; margin-top:10px; border-collapse: collapse;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th>Word</th>
+                    <th>Correct</th>
+                    <th>Incorrect</th>
+                    <th>Practice List</th>
+                </tr>
+            </thead>
+            <tbody id="statsBody">
+                </tbody>
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
